@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>NAVAS | UI/UX Designer &amp; Web Developer</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#9cf0ff",
+                        "on-primary": "#2000a4",
+                        "on-secondary-fixed": "#001f24",
+                        "background": "#13121b",
+                        "primary-fixed": "#e3dfff",
+                        "on-surface": "#e4e1ee",
+                        "on-error": "#690005",
+                        "on-tertiary": "#502500",
+                        "on-surface-variant": "#c7c4d8",
+                        "surface-dim": "#13121b",
+                        "on-primary-fixed-variant": "#3622ca",
+                        "tertiary-fixed": "#ffdcc6",
+                        "outline-variant": "#464555",
+                        "surface-container-highest": "#35343e",
+                        "on-primary-container": "#1b0091",
+                        "surface-bright": "#393842",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e4e1ee",
+                        "on-secondary": "#00363d",
+                        "on-tertiary-fixed": "#301400",
+                        "primary-fixed-dim": "#c4c0ff",
+                        "primary-container": "#8781ff",
+                        "primary": "#c4c0ff",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "error-container": "#93000a",
+                        "surface": "#13121b",
+                        "tertiary-container": "#db761f",
+                        "on-tertiary-container": "#461f00",
+                        "secondary-fixed-dim": "#00daf3",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "outline": "#918fa1",
+                        "secondary-container": "#00e3fd",
+                        "surface-container-lowest": "#0e0d16",
+                        "surface-variant": "#35343e",
+                        "secondary": "#bdf4ff",
+                        "tertiary": "#ffb785",
+                        "on-secondary-container": "#00616d",
+                        "surface-container-high": "#2a2933",
+                        "surface-tint": "#c4c0ff",
+                        "surface-container": "#1f1f28",
+                        "error": "#ffb4ab",
+                        "inverse-primary": "#4f44e2",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "on-primary-fixed": "#100069",
+                        "surface-container-low": "#1b1b24",
+                        "inverse-on-surface": "#302f39",
+                        "on-background": "#e4e1ee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "28px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-x": "24px",
+                        "section-gap": "160px",
+                        "gutter": "32px",
+                        "container-max": "1280px",
+                        "stack-gap": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Space Grotesk"],
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Space Grotesk"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Space Grotesk"],
+                        "display-lg-mobile": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "display-lg": ["80px", { "lineHeight": "90px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg-mobile": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #e4e1ee;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glow-accent {
+            box-shadow: 0 0 50px 0 rgba(196, 192, 255, 0.15);
+        }
+
+        .line-gradient {
+            background: linear-gradient(to bottom, #c4c0ff 0%, transparent 100%);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #35343e;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c4c0ff;
+        }
+    </style>
+</head>
+
+<body class="font-body-md selection:bg-primary selection:text-on-primary">
+    <!-- TopNavBar Shell -->
+    <header class="fixed top-0 w-full z-50 backdrop-blur-xl border-b border-outline-variant/10 h-20 bg-background/80">
+        <div class="flex justify-between items-center max-w-container-max mx-auto px-margin-x h-full">
+            <span class="font-display-lg text-headline-lg tracking-tighter text-on-background">NAVAS</span>
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md hover:text-secondary transition-colors duration-300"
+                    href="#home">Home</a>
+                <a class="text-on-surface-variant font-body-md text-body-md hover:text-secondary transition-colors duration-300"
+                    href="#about">About</a>
+                <a class="text-on-surface-variant font-body-md text-body-md hover:text-secondary transition-colors duration-300"
+                    href="#projects">Projects</a>
+                <a class="text-on-surface-variant font-body-md text-body-md hover:text-secondary transition-colors duration-300"
+                    href="#services">Services</a>
+                <a class="text-on-surface-variant font-body-md text-body-md hover:text-secondary transition-colors duration-300"
+                    href="#contact">Contact</a>
+            </nav>
+            <a href="#contact"
+                class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-md text-label-md Active:scale-95 transition-transform">Hire
+                Me</a>
+        </div>
+    </header>
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center py-40 overflow-hidden" id="home">
+            <!-- STITCH_SHADER_START:ANIMATION_1 class="absolute inset-0 w-full h-full opacity-40" -->
+            <div class="absolute inset-0 w-full h-full opacity-40" style="display:block;">
+                <canvas id="shader-canvas-ANIMATION_1" style="display:block;width:100%;height:100%"></canvas>
+                <script>
+                        (function () {
+                            const canvas = document.getElementById('shader-canvas-ANIMATION_1');
+
+                            // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+                            // This fires on initial layout and whenever the element is resized.
+                            function syncSize() {
+                                const w = canvas.clientWidth || 1280;
+                                const h = canvas.clientHeight || 720;
+                                if (canvas.width !== w || canvas.height !== h) {
+                                    canvas.width = w;
+                                    canvas.height = h;
+                                }
+                            }
+                            if (typeof ResizeObserver !== 'undefined') {
+                                new ResizeObserver(syncSize).observe(canvas);
+                            }
+                            syncSize();
+
+                            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                            if (!gl) return;
+                            const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+                            const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 mouse = u_mouse / u_resolution;
+    
+    // Create a dark ambient base
+    vec3 color = vec3(0.02, 0.02, 0.02);
+    
+    // Animated flowing gradients
+    float t = u_time * 0.2;
+    
+    // Primary accent glow (#6C63FF -> vec3(0.42, 0.39, 1.0))
+    vec2 p1 = vec2(0.5 + 0.3 * cos(t), 0.5 + 0.3 * sin(t * 1.2));
+    float d1 = length(uv - p1);
+    color += vec3(0.42, 0.39, 1.0) * (0.15 / (d1 + 0.4));
+    
+    // Secondary accent glow (#00E5FF -> vec3(0.0, 0.9, 1.0))
+    vec2 p2 = vec2(0.2 + 0.2 * sin(t * 1.5), 0.8 + 0.1 * cos(t * 0.8));
+    float d2 = length(uv - p2);
+    color += vec3(0.0, 0.9, 1.0) * (0.12 / (d2 + 0.5));
+    
+    // Mouse follow light effect
+    float mouseDist = length(uv - mouse);
+    color += vec3(0.42, 0.39, 1.0) * (0.05 / (mouseDist + 0.2));
+    
+    // Subtle noise/grain
+    float noise = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453);
+    color += noise * 0.015;
+    
+    gl_FragColor = vec4(color, 1.0);
+}`;
+                            function cs(type, src) {
+                                const s = gl.createShader(type);
+                                gl.shaderSource(s, src);
+                                gl.compileShader(s);
+                                return s;
+                            }
+                            const prog = gl.createProgram();
+                            gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+                            gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+                            gl.linkProgram(prog);
+                            gl.useProgram(prog);
+                            const buf = gl.createBuffer();
+                            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+                            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+                            const pos = gl.getAttribLocation(prog, 'a_position');
+                            gl.enableVertexAttribArray(pos);
+                            gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+                            const uTime = gl.getUniformLocation(prog, 'u_time');
+                            const uRes = gl.getUniformLocation(prog, 'u_resolution');
+                            const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+                            // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+                            // Shaders that need normalized coords should use: u_mouse / u_resolution.
+                            let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+                            window.addEventListener('mousemove', (event) => {
+                                const rect = canvas.getBoundingClientRect();
+                                if (rect.width && rect.height) {
+                                    const nx = (event.clientX - rect.left) / rect.width;
+                                    const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+                                    mouse.x = nx * canvas.width;
+                                    mouse.y = ny * canvas.height;
+                                }
+                            });
+
+                            function render(t) {
+                                if (typeof ResizeObserver === 'undefined') syncSize();
+                                gl.viewport(0, 0, canvas.width, canvas.height);
+                                if (uTime) gl.uniform1f(uTime, t * 0.001);
+                                if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+                                if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+                                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                                requestAnimationFrame(render);
+                            }
+                            render(0);
+                        })();
+                </script>
+            </div>
+            <!-- STITCH_SHADER_END:ANIMATION_1 -->
+            <div
+                class="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none">
+            </div>
+            <!-- <div
+                class="relative z-10 max-w-container-max mx-auto px-margin-x w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div
+                    class="reveal min-h-[500px] flex flex-col items-center justify-center text-center px-margin-mobile relative overflow-hidden">
+                    <p class="text-primary font-label-md text-label-md uppercase tracking-[0.2em] mb-4">Available for
+                        New Projects</p>
+                    <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-4">
+                        Hi, I'm <span class="text-primary">Navas</span><br />
+                        <span class="text-on-surface-variant">UI/UX Designer</span>
+                    </h1>
+                    <p class="text-on-surface-variant font-body-lg text-body-lg mb-10 max-w-lg">
+                        Crafting high-end digital experiences where technical precision meets visionary design.
+                        Specializing in cyber-minimalist aesthetics for premium brands.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-12">
+                        <a href="#projects"
+                            class="bg-primary text-on-primary px-8 py-4 rounded-2xl font-label-md text-label-md hover:shadow-lg hover:shadow-primary/20 transition-all">View
+                            Projects</a>
+                        <a href="Navas.k - Resume.pdf.pdf" target="_blank"
+                            class="bg-surface-container-highest text-on-surface px-8 py-4 rounded-2xl font-label-md text-label-md border border-outline-variant/30 hover:bg-surface-variant transition-all">Download
+                            Resume</a>
+                    </div>
+                </div>
+            </div> -->
+            <div class="relative z-10 max-w-container-max mx-auto px-margin-x w-full">
+
+                <div
+                    class="reveal min-h-[500px] w-full flex flex-col items-center justify-center text-center px-margin-mobile relative overflow-hidden">
+
+                    <p class="text-primary font-label-md text-label-md uppercase tracking-[0.2em] mb-4">
+                        Available for New Projects
+                    </p>
+
+                    <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-4">
+                        Hi, I'm <span class="text-primary">Navas</span><br />
+                        <span class="text-on-surface-variant">UI/UX Designer</span>
+                    </h1>
+
+                    <p class="text-on-surface-variant font-body-lg text-body-lg mb-10 max-w-xl">
+                        Crafting high-end digital experiences where technical precision meets visionary design.
+                        Specializing in cyber-minimalist aesthetics for premium brands.
+                    </p>
+
+                    <div class="flex flex-wrap justify-center gap-4 mb-12">
+
+                        <a href="#projects"
+                            class="bg-primary text-on-primary px-8 py-4 rounded-2xl font-label-md text-label-md hover:shadow-lg hover:shadow-primary/20 transition-all">
+                            View Projects
+                        </a>
+
+                        <a href="Navas.k - Resume.pdf.pdf" target="_blank"
+                            class="bg-surface-container-highest text-on-surface px-8 py-4 rounded-2xl font-label-md text-label-md border border-outline-variant/30 hover:bg-surface-variant transition-all">
+                            Download Resume
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- About Section -->
+        <section class="py-[160px] bg-surface-container-lowest" id="about">
+            <div class="max-w-container-max mx-auto px-margin-x">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+                    <div class="reveal active">
+                        <div class="relative aspect-[3/3] rounded-2xl overflow-hidden glass-card p-2">
+                            <div class="w-full h-full rounded-2xl overflow-hidden bg-surface-variant bg-cover bg-center"
+                                style="background-image: url(images/about-img.jpeg);">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reveal active">
+                        <h2 class="font-headline-xl text-headline-xl mb-8">About Me</h2>
+                        <p class="text-on-surface-variant font-body-lg text-body-lg mb-8">
+                            I am a visionary designer and developer based at the intersection of high-end craftsmanship
+                            and futuristic innovation. My work is defined by "Cyber-Minimalism"—a fusion of deep,
+                            void-like spaces with precision-engineered technical details.
+                        </p>
+                        <p class="text-on-surface-variant font-body-lg text-body-lg mb-12">
+                            Over the last 8 years, I've partnered with venture-backed startups and premium tech founders
+                            to translate complex ideas into polished, professional digital ecosystems.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Skills Section - Bento Grid -->
+        <section class="py-[160px]">
+            <div class="max-w-container-max mx-auto px-margin-x">
+                <div class="text-center mb-20 reveal">
+                    <h2 class="font-headline-xl text-headline-xl mb-4">Core Competencies</h2>
+                    <p class="text-on-surface-variant font-body-lg text-body-lg max-w-2xl mx-auto">Mastering the tools
+                        of the future to build the experiences of today.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+                    <!-- UI Design -->
+                    <div
+                        class="md:col-span-8 glass-card p-10 rounded-2xl group hover:border-secondary transition-colors reveal">
+                        <div class="flex justify-between items-start mb-12">
+                            <div>
+                                <span class="material-symbols-outlined text-secondary text-5xl mb-4">layers</span>
+                                <h3 class="font-headline-lg text-headline-lg">UI Design</h3>
+                                <p class="text-on-surface-variant max-w-md mt-2">Creating high-fidelity, interactive
+                                    prototypes with focus on precision and brand identity.</p>
+                            </div>
+                            <!-- <div class="text-headline-lg font-display-lg text-secondary/30">95%</div> -->
+                        </div>
+                        <div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                            <div class="w-[95%] h-full bg-secondary"></div>
+                        </div>
+                    </div>
+                    <!-- UX Research -->
+                    <div
+                        class="md:col-span-4 glass-card p-10 rounded-2xl group hover:border-primary transition-colors reveal">
+                        <span class="material-symbols-outlined text-primary text-5xl mb-4">analytics</span>
+                        <h3 class="font-headline-lg text-headline-lg">UX Research</h3>
+                        <p class="text-on-surface-variant mt-2 mb-8">User journey mapping and data-driven decisions.</p>
+                        <div class="flex items-center gap-4">
+                            <div class="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                                <div class="w-[88%] h-full bg-primary"></div>
+                            </div>
+                            <!-- <span class="text-label-md text-primary">88%</span> -->
+                        </div>
+                    </div>
+                    <!-- Development -->
+                    <div
+                        class="md:col-span-4 glass-card p-10 rounded-2xl group hover:border-tertiary transition-colors reveal">
+                        <span class="material-symbols-outlined text-tertiary text-5xl mb-4">code</span>
+                        <h3 class="font-headline-lg text-headline-lg">Web Dev</h3>
+                        <p class="text-on-surface-variant mt-2 mb-8">Modern stacks with performance in mind.</p>
+                        <div class="flex items-center gap-4">
+                            <div class="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                                <div class="w-[92%] h-full bg-tertiary"></div>
+                            </div>
+                            <!-- <span class="text-label-md text-tertiary">92%</span> -->
+                        </div>
+                    </div>
+                    <!-- Animation -->
+                    <div
+                        class="md:col-span-8 glass-card p-10 rounded-2xl group hover:border-secondary-fixed-dim transition-colors reveal">
+                        <div class="flex justify-between items-start mb-12">
+                            <div>
+                                <span
+                                    class="material-symbols-outlined text-secondary-fixed-dim text-5xl mb-4">animation</span>
+                                <h3 class="font-headline-lg text-headline-lg">Interaction Design</h3>
+                                <p class="text-on-surface-variant max-w-md mt-2">Bringing interfaces to life with
+                                    micro-interactions and smooth transitions.</p>
+                            </div>
+                            <!-- <div class="text-headline-lg font-display-lg text-secondary-fixed-dim/30">90%</div> -->
+                        </div>
+                        <div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                            <div class="w-[90%] h-full bg-secondary-fixed-dim"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Services Section -->
+        <section class="py-[160px] bg-surface-container-lowest" id="services">
+            <div class="max-w-container-max mx-auto px-margin-x">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8 reveal active">
+                    <div class="max-w-2xl">
+                        <h2 class="font-headline-xl text-headline-xl mb-4">Premium Services</h2>
+                        <p class="text-on-surface-variant font-body-lg text-body-lg">End-to-end digital solutions for
+                            visionaries who demand excellence in every pixel.</p>
+                    </div>
+                    <!-- <a class="text-primary font-label-md flex items-center gap-2 hover:translate-x-2 transition-transform"
+                    href="#contact">
+                    Explore all services <span class="material-symbols-outlined">arrow_forward</span>
+                </a> -->
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div
+                        class="glass-card p-12 rounded-2xl group hover:-translate-y-4 transition-all duration-500 reveal active">
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                            <span class="material-symbols-outlined text-3xl">web</span>
+                        </div>
+                        <h3 class="font-headline-lg text-headline-lg mb-4">Web Designer</h3>
+                        <p class="text-on-surface-variant mb-8">High-performance web solutions built with modern
+                            frameworks and responsive architectures.</p>
+                        <ul class="space-y-3 text-label-md text-outline">
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                                HTML5 & CSS3</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span> Bootstrap
+                            </li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                                Responsive </li>
+                        </ul>
+                    </div>
+                    <!-- Service 2 -->
+                    <div
+                        class="glass-card p-12 rounded-2xl group hover:-translate-y-4 transition-all duration-500 reveal active">
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+                            <span class="material-symbols-outlined text-3xl">web</span>
+                        </div>
+                        <h3 class="font-headline-lg text-headline-lg mb-4">UI/UX Design</h3>
+                        <p class="text-on-surface-variant mb-8">High-end interface design with focus on usability,
+                            accessibility, and high conversion rates.</p>
+                        <ul class="space-y-3 text-label-md text-outline">
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-secondary text-sm">check_circle</span> User
+                                Research</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+                                Wireframing</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+                                Prototypes</li>
+                        </ul>
+                    </div>
+                    <!-- Service 3 -->
+                    <div
+                        class="glass-card p-12 rounded-2xl group hover:-translate-y-4 transition-all duration-500 reveal active">
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-tertiary/10 flex items-center justify-center mb-8 group-hover:bg-tertiary group-hover:text-on-tertiary transition-colors">
+                            <span class="material-symbols-outlined text-3xl">lightbulb</span>
+                        </div>
+                        <h3 class="font-headline-lg text-headline-lg mb-4">Graphic Design</h3>
+                        <p class="text-on-surface-variant mb-8">Visual communication that inspire, inform, and creates
+                            impact</p>
+                        <ul class="space-y-3 text-label-md text-outline">
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-tertiary text-sm">check_circle</span> Social
+                                Media Design</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-tertiary text-sm">check_circle</span> Poster
+                                Design</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+                                Marketing and Ads</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Featured Projects -->
+        <section class="py-[160px]" id="projects">
+            <div class="max-w-container-max mx-auto px-margin-x">
+                <div class="text-center mb-20 reveal">
+                    <h2 class="font-headline-xl text-headline-xl mb-4">Selected Works</h2>
+                    <p class="text-on-surface-variant font-body-lg text-body-lg max-w-2xl mx-auto">A glimpse into the
+                        digital realities I've built for industry leaders.</p>
+                </div>
+                <div class="space-y-32">
+                    <!-- Project 1 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center reveal">
+                        <div class="order-2 md:order-1">
+                            <span class="text-primary font-label-md uppercase tracking-[0.2em] mb-4 block">BUILDING
+                                MATERIALS WEBSITE</span>
+                            <h3 class="font-headline-xl text-headline-xl mb-6">AM Traders</h3>
+                            <p class="text-on-surface-variant font-body-lg text-body-lg mb-8">A professional business
+                                website designed for AM Traders, a complete building-materials solution provider. The
+                                interface presents their products and services in a clear, structured layout while
+                                creating a strong and trustworthy brand presence online.
+                            </p>
+                            <div class="flex flex-wrap gap-3 mb-10">
+                                <span class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">Web
+                                    Design</span>
+                                <span
+                                    class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">HTML/CSS</span>
+                                <span
+                                    class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">Responsive
+                                    UI</span>
+                            </div>
+
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <div class="relative rounded-2xl overflow-hidden glass-card group">
+                                <div class="aspect-video bg-surface-variant bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                                    style="background-image: url(images/am-traders.jpeg)">
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center reveal">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden glass-card group">
+                                <div class="aspect-video bg-surface-variant bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                                    style="background-image: url(images/soorya-bhavanam.jpeg)">
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-secondary font-label-md uppercase tracking-[0.2em] mb-4 block">SOLAR &
+                                ENERGY WEBSITE</span>
+                            <h3 class="font-headline-xl text-headline-xl mb-6">Soorya Bhavanam</h3>
+                            <p class="text-on-surface-variant font-body-lg text-body-lg mb-8">A clean and modern website
+                                for a solar energy company, designed to present solar products and solutions in a simple
+                                and engaging way.
+                            </p>
+                            <div class="flex flex-wrap gap-3 mb-10">
+                                <span class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">Web
+                                    Design</span>
+                                <span
+                                    class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">HTML/CSS</span>
+                                <span
+                                    class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">Responsive
+                                    UI</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center reveal">
+                        <div class="order-2 md:order-1">
+                            <span class="text-tertiary font-label-md uppercase tracking-[0.2em] mb-4 block">PIZZA
+                                DELIVERY MOBILE APP</span>
+                            <h3 class="font-headline-xl text-headline-xl mb-6">DeepSlice</h3>
+                            <p class="text-on-surface-variant font-body-lg text-body-lg mb-8">
+                                Transforming pizza ordering into a smooth and engaging mobile experience through
+                                intuitive design, streamlined workflows, and modern interactions.
+                            </p>
+                            <div class="flex flex-wrap gap-3 mb-10">
+                                <span
+                                    class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">Research</span>
+                                <span
+                                    class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">Planning</span>
+                                <span
+                                    class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">Wireframes</span>
+                                <span class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">UI
+                                    Presentation</span>
+                                <span
+                                    class="px-4 py-1.5 rounded-full border border-outline-variant text-label-md">Prototype</span>
+                            </div>
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <div class="relative rounded-2xl overflow-hidden glass-card group">
+                                <div class="aspect-video bg-surface-variant bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                                    style="background-image: url(images/deepslice.png)">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Design Process -->
+        <section class="py-[160px] bg-surface-container-lowest">
+            <div class="max-w-container-max mx-auto px-margin-x">
+                <div class="text-center mb-24 reveal">
+                    <h2 class="font-headline-xl text-headline-xl mb-4">Strategic Process</h2>
+                    <p class="text-on-surface-variant font-body-lg text-body-lg">Precision engineering from concept to
+                        deployment.</p>
+                </div>
+                <div class="relative flex flex-col md:flex-row justify-between gap-12">
+                    <div
+                        class="absolute top-1/2 left-0 w-full h-[2px] line-gradient hidden md:block -translate-y-1/2 opacity-20">
+                    </div>
+                    <!-- Step 1 -->
+                    <div class="relative z-10 flex-1 reveal">
+                        <div
+                            class="font-display-lg text-[120px] text-primary/5 absolute -top-16 left-0 -z-10 select-none">
+                            01</div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-primary flex items-center justify-center mb-6 glow-accent">
+                            <span class="material-symbols-outlined text-on-primary">search</span>
+                        </div>
+                        <h4 class="font-headline-lg text-headline-lg mb-4">Discover</h4>
+                        <p class="text-on-surface-variant">Deep dive into goals, market research, and audience behavior
+                            mapping.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="relative z-10 flex-1 reveal" style="transition-delay: 100ms">
+                        <div
+                            class="font-display-lg text-[120px] text-secondary/5 absolute -top-16 left-0 -z-10 select-none">
+                            02</div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center mb-6 glow-accent">
+                            <span class="material-symbols-outlined text-on-secondary">architecture</span>
+                        </div>
+                        <h4 class="font-headline-lg text-headline-lg mb-4">Define</h4>
+                        <p class="text-on-surface-variant">Information architecture, user flows, and wireframing core
+                            structures.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="relative z-10 flex-1 reveal" style="transition-delay: 200ms">
+                        <div
+                            class="font-display-lg text-[120px] text-tertiary/5 absolute -top-16 left-0 -z-10 select-none">
+                            03</div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-tertiary flex items-center justify-center mb-6 glow-accent">
+                            <span class="material-symbols-outlined text-on-tertiary">palette</span>
+                        </div>
+                        <h4 class="font-headline-lg text-headline-lg mb-4">Design</h4>
+                        <p class="text-on-surface-variant">High-fidelity UI creation, prototyping, and design system
+                            engineering.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="relative z-10 flex-1 reveal" style="transition-delay: 300ms">
+                        <div
+                            class="font-display-lg text-[120px] text-primary-fixed-dim/5 absolute -top-16 left-0 -z-10 select-none">
+                            04</div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-primary-fixed-dim flex items-center justify-center mb-6 glow-accent">
+                            <span class="material-symbols-outlined text-on-primary-fixed">rocket_launch</span>
+                        </div>
+                        <h4 class="font-headline-lg text-headline-lg mb-4">Launch</h4>
+                        <p class="text-on-surface-variant">Development, final testing, and seamless deployment to the
+                            world.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Experience & Tools Combined -->
+        <section class="py-[100px] bg-surface-container-lowest">
+            <div class="max-w-container-max mx-auto px-margin-x">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-32">
+                    <!-- Experience -->
+                    <div class="reveal">
+                        <h2 class="font-headline-xl text-headline-xl mb-12">Experience</h2>
+                        <div class="space-y-12 relative">
+                            <div class="absolute left-0 top-0 w-[2px] h-full line-gradient opacity-20"></div>
+                            <div class="pl-10 relative">
+                                <div class="absolute left-[-5px] top-1 w-3 h-3 rounded-full bg-primary glow-accent">
+                                </div>
+                                <span class="text-primary font-label-md">2025 - 2026</span>
+                                <h4 class="font-headline-lg text-headline-lg mt-2">Web Designer</h4>
+                                <p class="text-outline mb-4">The Chandraz <br> Kondotty, Near Calicut Airport</p>
+                            </div>
+                            <div class="pl-10 relative">
+                                <div class="absolute left-[-5px] top-1 w-3 h-3 rounded-full bg-outline opacity-50">
+                                </div>
+                                <span class="text-primary font-label-md">2024 - 2025</span>
+                                <h4 class="font-headline-lg text-headline-lg mt-2">UI/UX Designer</h4>
+                                <p class="text-outline mb-4">ARCRAFTINFOTECH <br> Vytila, Kochi</p>
+                                <!-- <p class="text-on-surface-variant">Full-stack development focused on performance
+                                    optimization and high-end animations.</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tools -->
+                    <div class="reveal active">
+                        <h2 class="font-headline-xl text-headline-xl mb-12">Tools</h2>
+                        <div class="grid grid-cols-3 sm:grid-cols-4 gap-6"><!-- Figma -->
+                            <div
+                                class="glass-card aspect-square rounded-2xl flex flex-col items-center justify-center group hover:border-primary transition-all">
+                                <span
+                                    class="material-symbols-outlined text-4xl mb-2 group-hover:scale-110 transition-transform">stylus_note</span>
+                                <span class="text-label-md text-outline">Figma</span>
+                            </div>
+                            <!-- VS Code -->
+                            <div
+                                class="glass-card aspect-square rounded-2xl flex flex-col items-center justify-center group hover:border-primary transition-all">
+                                <span
+                                    class="material-symbols-outlined text-4xl mb-2 group-hover:scale-110 transition-transform">terminal</span>
+                                <span class="text-label-md text-outline">VS Code</span>
+                            </div>
+                            <!-- Photoshop -->
+                            <div
+                                class="glass-card aspect-square rounded-2xl flex flex-col items-center justify-center group hover:border-primary transition-all">
+                                <span
+                                    class="material-symbols-outlined text-4xl mb-2 group-hover:scale-110 transition-transform">photo_camera</span>
+                                <span class="text-label-md text-outline">Photoshop</span>
+                            </div>
+                            <!-- Illustrator -->
+                            <div
+                                class="glass-card aspect-square rounded-2xl flex flex-col items-center justify-center group hover:border-primary transition-all">
+                                <span
+                                    class="material-symbols-outlined text-4xl mb-2 group-hover:scale-110 transition-transform">draw</span>
+                                <span class="text-label-md text-outline">Illustrator</span>
+                            </div>
+                            <!-- Adobe XD -->
+                            <div
+                                class="glass-card aspect-square rounded-2xl flex flex-col items-center justify-center group hover:border-primary transition-all">
+                                <span
+                                    class="material-symbols-outlined text-4xl mb-2 group-hover:scale-110 transition-transform">dashboard</span>
+                                <span class="text-label-md text-outline">Adobe XD</span>
+                            </div>
+                            <!-- Canva -->
+                            <div
+                                class="glass-card aspect-square rounded-2xl flex flex-col items-center justify-center group hover:border-primary transition-all">
+                                <span
+                                    class="material-symbols-outlined text-4xl mb-2 group-hover:scale-110 transition-transform">auto_awesome_mosaic</span>
+                                <span class="text-label-md text-outline">Canva</span>
+                            </div>
+                            <!-- AI Tools -->
+                            <div
+                                class="glass-card aspect-square rounded-2xl flex flex-col items-center justify-center group hover:border-primary transition-all">
+                                <span
+                                    class="material-symbols-outlined text-4xl mb-2 group-hover:scale-110 transition-transform">psychology</span>
+                                <span class="text-label-md text-outline">AI Tools</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section -->
+        <section class="py-[160px] relative" id="contact">
+            <div class="max-w-container-max mx-auto px-margin-x">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+                    <div class="reveal">
+                        <h2 class="font-headline-xl text-headline-xl mb-8">Let's Build Something <span
+                                class="text-primary">Amazing</span></h2>
+                        <p class="text-on-surface-variant font-body-lg text-body-lg mb-12">
+                            Available for freelance projects, consulting, and full-time collaborations. Reach out and
+                            let's start a conversation.
+                        </p>
+                        <div class="space-y-6">
+                            <div
+                                class="flex items-center gap-6 p-6 glass-card rounded-2xl group hover:bg-primary/5 transition-colors">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+                                    <span class="material-symbols-outlined">mail</span>
+                                </div>
+                                <div>
+                                    <p class="text-label-md text-outline">Email Me</p>
+                                    <p class="text-body-lg font-bold">figmanavas@gmail.com</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center gap-6 p-6 glass-card rounded-2xl group hover:bg-secondary/5 transition-colors">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-on-secondary transition-all">
+                                    <span class="material-symbols-outlined">call</span>
+                                </div>
+                                <div>
+                                    <p class="text-label-md text-outline">Call Me</p>
+                                    <p class="text-body-lg font-bold">+91 93834 91867</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center gap-6 p-6 glass-card rounded-2xl group hover:bg-tertiary/5 transition-colors">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary group-hover:bg-tertiary group-hover:text-on-tertiary transition-all">
+                                    <span class="material-symbols-outlined">location_on</span>
+                                </div>
+                                <div>
+                                    <p class="text-label-md text-outline">Location</p>
+                                    <p class="text-body-lg font-bold" data-location="San Francisco">Manjeri, Malappuram
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="reveal">
+                        <form class="glass-card p-10 rounded-2xl space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-label-md text-outline">Full Name</label>
+                                    <input
+                                        class="w-full bg-surface-container-lowest border-none border-b border-outline-variant focus:ring-0 focus:border-primary transition-all rounded-lg py-4 px-4"
+                                        placeholder="Your name" type="text" />
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-label-md text-outline">Email Address</label>
+                                    <input
+                                        class="w-full bg-surface-container-lowest border-none border-b border-outline-variant focus:ring-0 focus:primary transition-all rounded-lg py-4 px-4"
+                                        placeholder="Your email" type="email" />
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-label-md text-outline">Subject</label>
+                                <input
+                                    class="w-full bg-surface-container-lowest border-none border-b border-outline-variant focus:ring-0 focus:border-primary transition-all rounded-lg py-4 px-4"
+                                    placeholder="New Project Inquiry" type="text" />
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-label-md text-outline">Message</label>
+                                <textarea
+                                    class="w-full bg-surface-container-lowest border-none border-b border-outline-variant focus:ring-0 focus:border-primary transition-all rounded-lg py-4 px-4 resize-none"
+                                    placeholder="Tell me about your project..." rows="4"></textarea>
+                            </div>
+                            <button
+                                class="w-full bg-primary text-on-primary py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/30 transition-all"
+                                type="submit">
+                                Send Message <span class="material-symbols-outlined">send</span>
+                            </button>
+                        </form>
+                    </div> -->
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer Shell -->
+    <footer class="w-full py-10 bg-surface-container-lowest border-t border-outline-variant/10">
+        <div
+            class="flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto px-margin-x gap-stack-gap">
+            <span class="font-display-lg text-headline-lg text-on-background">NAVAS</span>
+            <p class="font-body-md text-body-md text-on-surface-variant">© 2026 Navas. All rights reserved. </p>
+            <div class="flex gap-8">
+                <a class="text-on-surface-variant hover:text-secondary-container transition-all font-body-md text-body-md"
+                    href="www.linkedin.com/in/navas-k-873817319" target="_blank">LinkedIn</a>
+                <a class="text-on-surface-variant hover:text-secondary-container transition-all font-body-md text-body-md"
+                    href="https://www.behance.net/navasfigma" target="_blank">Behance</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", reveal);
+
+        // Navbar interaction
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => {
+                    l.className = 'text-on-surface-variant font-body-md text-body-md hover:text-secondary transition-colors duration-300';
+                });
+                link.className = 'text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md hover:text-secondary transition-colors duration-300';
+            });
+        });
+    </script>
+</body>
+
+</html>
